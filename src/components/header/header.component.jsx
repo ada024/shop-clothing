@@ -11,37 +11,33 @@ import CartIcon from "../cart-icon/cart-icon.component";
 import CartDropdown from "../cart-dropdown/cart-dropdown.component";
 import {selectCurrentUser} from "../../redux/user/user.selector";
 import {selectCartHidden} from "../../redux/cart/cart.selector";
+import {HeaderContainer, LogoContainer, OptionLink, OptionsContainer} from "./header.styles";
 
 
 
 const Header = ({currentUser, hidden}) => (
-    <div className='header'>
-        <Link className='logo-container' to='/'>
+    <HeaderContainer>
+        <LogoContainer to='/'>
             <Logo className='logo'/>
-        </Link>
-        <div className='options'>
-            <Link className='option' to='/shop'>
+        </LogoContainer>
+        <OptionsContainer>
+            <OptionLink to='/shop'>
                 SHOP
-            </Link>
-            <Link className='option' to='/contact'>
+            </OptionLink>
+            <OptionLink to='/contact'>
                 CONTACT
-            </Link>
-            {
-                currentUser ?
-                    (   <div className='option' onClick={ () => auth.signOut() }> S7IGN OUT</div> )
-                    : (
-                    <Link className='option' to={'/signin'}>
-                        SIGN IN
-                    </Link>
+            </OptionLink>
+            {currentUser ?(
+                <OptionLink as='div' onClick={ () => auth.signOut() }>
+                    S7IGN OUT
+                </OptionLink>
+                ) : (
+                    <OptionLink to={'/signin'}>SIGN IN</OptionLink>
                 )}
             <CartIcon />
-        </div>
-        {
-        hidden ? null :
-        <CartDropdown />
-        }
-
-    </div>
+        </OptionsContainer>
+        {hidden ? null : <CartDropdown />}
+    </HeaderContainer>
 );
 // destruct nested value of another value , (check redux-logger)
 const mapStateToProps = createStructuredSelector({
