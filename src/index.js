@@ -3,18 +3,55 @@ import ReactDOM from 'react-dom';
 import {BrowserRouter} from "react-router-dom";
 import {Provider} from "react-redux";
 import {PersistGate} from "redux-persist/integration/react";
+// import {resolvers} from "./graphql/resolver";
+// import {ApolloProvider, ApolloClient, createHttpLink, gql,} from "@apollo/client";
+// import { InMemoryCache } from "@apollo/client/cache";
+import { ApolloProvider } from 'react-apollo';
+import { createHttpLink } from 'apollo-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { ApolloClient, gql } from 'apollo-boost';
+
 
 import './index.css';
 import App from './App';
 import {store, persistor} from "./redux/store";
 
 
+const httpLink = createHttpLink({
+    uri: `https://crwn-clothing.com`
+});
+
+const cache = new InMemoryCache();
+
+const client = new ApolloClient({
+        link: httpLink,
+        cache
+    }
+);
+
+client.query({
+    query: gql`
+ {
+ collections{
+    id
+    title
+
+  }} 
+   
+   `
+}).then(res => console.log(res)).catch(error => console.log(error));
+
 ReactDOM.render(
-    <Provider store={store}>
-        <BrowserRouter>
-            <PersistGate persistor={persistor}>
-                <App/>
-            </PersistGate>
-        </BrowserRouter>
-    </Provider>,
-    document.getElementById('root'));
+    <ApolloProvider client={client}>
+        <Provider store={store}>
+            <BrowserRouter>
+                <PersistGate persistor={persistor}>
+                    <App/>
+                </PersistGate>
+            </BrowserRouter>
+        </Provider>,
+    </ApolloProvider>,
+    document.getElementById('root')
+);
+
+
