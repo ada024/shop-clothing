@@ -1,6 +1,6 @@
 # shop-clothing
 
-Shop clothing is a E-commerse app, made for my React learning journey.
+Shop clothing is a E-commerce app, made for my React learning journey.
 
 The tutorial that is followed uses:
 Redux Thunk & Saga,
