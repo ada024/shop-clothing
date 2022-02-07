@@ -11,3 +11,6 @@ Styled-components,
 Payments with Stripe API,
  Firebase to store data,
 GraphQL
+<br>
+
+<img src="https://github.com/ada024/shop-clothing/blob/main/screenshots/clothing_icon.png" width=240 >
